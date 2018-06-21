@@ -38,8 +38,12 @@ get "/countries/new" do
   'new'
 end
 
+# Show
 get "/countries/:id" do
-  "show "
+  id = params[:id].to_i
+  @country = $dummy_data[id]
+
+  erb :'countries/show'
 end
 
 post '/countries' do
