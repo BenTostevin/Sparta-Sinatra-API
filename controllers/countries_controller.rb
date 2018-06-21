@@ -26,41 +26,70 @@ class CountriesController < Sinatra::Base
   }
   ]
 
-# Index
-get '/countries' do
-  @countries = $dummy_data
+  # Index
+  get '/countries' do
+    @countries = $dummy_data
 
-  erb :'countries/index'
-end
+    erb :'countries/index'
+  end
 
+  # New
+  get "/countries/new" do
+    @country = {
+      :id => "",
+      :country_name => "",
+      :continent => "",
+      :population => "",
+      :language => "",
+      :world_cup => "",
+    }
 
-get "/countries/new" do
-  'new'
-end
+    erb :'countries/new'
+  end
 
-# Show
-get "/countries/:id" do
-  id = params[:id].to_i
-  @country = $dummy_data[id]
+  # Show
+  get "/countries/:id" do
+    id = params[:id].to_i
+    @country = $dummy_data[id]
 
-  erb :'countries/show'
-end
+    erb :'countries/show'
+  end
 
-post '/countries' do
-  'create'
-end
+  # Create
+  post '/countries' do
+    id = $dummy_data.last[:id] + 1
 
-get '/countries/:id/edit' do
-  "edit"
-end
+    new_post = {
+      :id => id,
+      :country_name => params[:country_name],
+      :continent => params[:continent],
+      :population => params[:population],
+      :language => params[:language],
+      :world_cup => params[:world_cup],
+    }
 
-put '/countries/:id' do
-  "update"
-end
+    $dummy_data.push new_post
 
-delete '/countries/:id' do
-  "destroy"
-end
+    redirect '/countries'
+  end
+
+  # Edit
+  get '/countries/:id/edit' do
+    id = params[:id].to_i
+
+    @country = $dummy_data[id]
+    erb :'countries/edit'
+  end
+
+  # Update
+  put '/countries/:id' do
+    "update"
+  end
+
+  # Destroy
+  delete '/countries/:id' do
+    "destroy"
+  end
 
 
 

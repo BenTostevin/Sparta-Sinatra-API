@@ -1,0 +1,30 @@
+<h1>form</h1>
+
+<form action="/countries/<%= @country[:id]%> " method="post">
+  <div>
+    <label>Title</label>
+    <input type="text" name="country_name" value="<%= @country[:country_name] %>">
+  </div>
+  <div>
+    <label>Continent</label>
+    <input type="text" name="continent" value="<%= @country[:continent] %>">
+  </div>
+  <div>
+    <label>Population</label>
+    <input type="text" name="population" value="<%= @country[:population] %>">
+  </div>
+  <div>
+    <label>Language</label>
+    <input type="text" name="Language" value="<%= @country[:language] %>">
+  </div>
+  <div>
+    <label>World Cup</label>
+    <input type="text" name="world_cup" value="<%= @country[:world_cup] %>">
+  </div>
+  <input type="submit" value="submit">
+
+  <% if @country[:id] != "" %>
+  <input type="hidden" name="_method" value="PUT">
+  <% end %>
+
+</form>
