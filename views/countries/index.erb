@@ -1,0 +1,8 @@
+<h1>Welcome to Index page for Countries</h1>
+
+<% @countries.each do |country| %>
+<a href="/<%=country[:id]%>">
+  <h3><%= country[:country_name] %></h3>
+</a>
+
+<% end %>
