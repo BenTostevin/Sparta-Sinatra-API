@@ -56,7 +56,7 @@ class CountriesController < Sinatra::Base
   end
 
   # Create
-  post '/countries' do
+  post '/countries/' do
     id = $dummy_data.last[:id] + 1
 
     new_post = {
@@ -83,11 +83,30 @@ class CountriesController < Sinatra::Base
 
   # Update
   put '/countries/:id' do
-    "update"
+
+    id = params[:id].to_i
+
+    country = $dummy_data[id]
+
+    country[:country_name] = params[:country_name]
+    country[:continent] = params[:continent]
+    country[:population] = params[:population]
+    country[:language] = params[:language]
+    country[:world_cup] = params[:world_cup]
+
+    $dummy_data[id] = country
+
+    redirect '/countries'
   end
 
   # Destroy
   delete '/countries/:id' do
+    id = params[:id].to_i
+
+    $dummy_data.delete_at id
+
+    redirect "/countries"
+
     "destroy"
   end
 
