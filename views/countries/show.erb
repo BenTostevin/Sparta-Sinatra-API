@@ -1,8 +1,11 @@
-<h1><%= @country[:country_name] %></h1>
 
-<h3><%= @country[:continent] %></h3>
-<h3><%= @country[:population] %></h3>
-<h3><%= @country[:language] %></h3>
-<h3><%= @country[:world_cup] %></h3>
 
-<a href="/countries/<%= @country[:id] %>/edit"> Edit </a>
+<h1><%= @country['data'][@id]["country_name"]%></h1>
+
+
+<h3><%= @country['data'][@id]["continent"] %></h3>
+<h3><%= @country['data'][@id]["population"] %></h3>
+<h3><%= @country['data'][@id]["language"] %></h3>
+<h3><%= @country['data'][@id]["world_cup"] %></h3>
+
+<a href="/countries/<%= @id %>/edit"> Edit </a>

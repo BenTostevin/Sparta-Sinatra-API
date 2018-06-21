@@ -1,13 +1,13 @@
 <h1>Welcome to Index page for Countries</h1>
 
-<% @countries.each do |country| %>
-<a href="/countries/<%=country[:id]%>">
-  <h3><%= country[:country_name] %></h3>
+<% @countries['data'].each do |country| %>
+<a href="/countries/<%=country["id"]%>">
+  <h3><%= country["country_name"] %></h3>
 </a>
 
-<a href="/countries/<%=country[:id]%>/edit">Edit</a>
+<a href="/countries/<%=country["id"]%>/edit">Edit</a>
 
-<form action="/countries/<%=country[:id]%>" method="post">
+<form action="/countries/<%=country["id"]%>" method="post">
   <input type="submit" value="DELETE">
   <input type="hidden" name="_method" value="DELETE">
 

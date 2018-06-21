@@ -1,3 +1,5 @@
+require 'httparty'
+require 'json'
 class CountriesController < Sinatra::Base
 
   set :root, File.join(File.dirname(__FILE__), '..')
@@ -8,27 +10,9 @@ class CountriesController < Sinatra::Base
     register Sinatra::Reloader
   end
 
-  $dummy_data = [ {
-    :id => 0,
-    :country_name => 'UK',
-    :continent => 'Europe',
-    :population => 70,
-    :language => 'English',
-    :world_cup => true
-  },
-  {
-    :id => 1,
-    :country_name => 'Australia',
-    :continent => 'Oceanic',
-    :population => 30,
-    :language => 'English',
-    :world_cup => false
-  }
-  ]
-
   # Index
   get '/countries' do
-    @countries = $dummy_data
+    @countries = HTTParty.get('http://sparta-example-3.herokuapp.com/countries')
 
     erb :'countries/index'
   end
@@ -49,8 +33,11 @@ class CountriesController < Sinatra::Base
 
   # Show
   get "/countries/:id" do
-    id = params[:id].to_i
-    @country = $dummy_data[id]
+    #
+    #
+    # @country = HTTParty.find('http://sparta-example-3.herokuapp.com/countries')
+    @id = params[:id].to_i - 1
+    @country = HTTParty.get('http://sparta-example-3.herokuapp.com/countries')
 
     erb :'countries/show'
   end
@@ -76,9 +63,9 @@ class CountriesController < Sinatra::Base
 
   # Edit
   get '/countries/:id/edit' do
-    id = params[:id].to_i
+    @id = params[:id].to_i
 
-    @country = $dummy_data[id]
+    @country = HTTParty.get('http://sparta-example-3.herokuapp.com/countries')
     erb :'countries/edit'
   end
 
@@ -87,15 +74,27 @@ class CountriesController < Sinatra::Base
 
     id = params[:id].to_i
 
-    country = $dummy_data[id]
+    response = HTTParty.get('http://sparta-example-3.herokuapp.com/countries')['data']
 
-    country[:country_name] = params[:country_name]
-    country[:continent] = params[:continent]
-    country[:population] = params[:population]
-    country[:language] = params[:language]
-    country[:world_cup] = params[:world_cup]
+    country = Hash.new
 
-    $dummy_data[id] = country
+    response.each do |res|
+      if res['id'] == id
+        country[:country_name] = params[:country_name]
+        country[:continent] = params[:continent]
+        country[:population] = params[:population]
+        country[:language] = params[:language]
+        country[:world_cup] = params[:world_cup]
+      end
+    end
+
+    puts country.to_json
+
+    HTTParty.put('http://sparta-example-3.herokuapp.com/countries',:body => country.to_json, :headers => {'Content-Type' => 'application/x-www-form-urlencoded'} )
+
+
+    # response = HTTParty.put('http://sparta-example-3.herokuapp.com/countries',:body => country.to_json,:headers => { "Content-Type" => 'application/json'})
+    # puts response.body
 
     redirect '/countries'
   end
