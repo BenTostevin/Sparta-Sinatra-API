@@ -1,6 +1,6 @@
 <h1>form</h1>
 
-<form action="/countries/<%= @country[:id]%> " method="post">
+<form action="/countries/<%= @country[:id] %>" method="post">
   <div>
     <label>Title</label>
     <input type="text" name="country_name" value="<%= @country[:country_name] %>">
@@ -15,7 +15,7 @@
   </div>
   <div>
     <label>Language</label>
-    <input type="text" name="Language" value="<%= @country[:language] %>">
+    <input type="text" name="language" value="<%= @country[:language] %>">
   </div>
   <div>
     <label>World Cup</label>

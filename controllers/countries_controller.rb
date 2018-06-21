@@ -70,6 +70,7 @@ class CountriesController < Sinatra::Base
 
     $dummy_data.push new_post
 
+
     redirect '/countries'
   end
 

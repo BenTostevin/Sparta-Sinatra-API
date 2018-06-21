@@ -5,7 +5,7 @@
   <h3><%= country[:country_name] %></h3>
 </a>
 
-<a href="/countries/<%country[:id]%>/edit">Edit</a>
+<a href="/countries/<%=country[:id]%>/edit">Edit</a>
 
 <form action="/countries/<%=country[:id]%>" method="post">
   <input type="submit" value="DELETE">
